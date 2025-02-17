@@ -1,0 +1,621 @@
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" type="text/css" href="css/view.css">
+        <script src="js/jquery-3.6.0.min.js"></script>
+        <script src="js/jquery.lazyloadxt.js"></script>
+        <script src="js/jquery.modal.js"></script>
+        <script src="js/page.js"></script>
+        <!--add gluhoy 2023.02.06 gluhoy_favorites -->
+        <script src="js/page_favorites.js"></script>
+        <!--end gluhoy 2023.02.06 gluhoy_favorites -->
+        <!-- add gluhoy 2023.08.15 eye -->
+        <script src="js/eye.js"></script>
+        <!-- end gluhoy 2023.08.15 eye -->
+        <!-- gluhoy 2023.10.19 -->
+        <script src="js/page_error.js"></script>
+        <!-- gluhoy 2023.10.19 -->
+        <link rel="stylesheet" href="css/jquery.modal.min.css"/>
+    </head>
+    <!--<body onload="On_Load();Read_Favorites_Pages();" oncontextmenu="return false;">-->
+    <body onload="On_Load();Read_Favorites_Pages();">
+        <div id="div_menu" class="div_menu">
+            <!-- add gluhoy 2023.04.10 home -->
+            <a id="btn_home" href="m_main.php" title="home">
+                <img class="img_btn_menu" src="./pic/home.png">
+            </a>
+            <!-- end gluhoy 2023.04.10 home -->
+            <a id="btn_print" href="#print" title="Сохранить">
+                <img class="img_btn_menu" src="./pic/save_64_1.png">
+            </a>
+            <a id="btn_max" onClick="Change_quality( 1);" title="Увеличить качество">
+                <img class="img_btn_menu" src="./pic/max_80.png">
+            </a>
+            <a id="btn_min" onClick="Change_quality(-1);" title="Уменьшить качество">
+                <img class="img_btn_menu" src="./pic/min_80.png">
+            </a>
+            <a id="btn_page_l" onClick="Change_Page(-1);" title="Листать влево ">
+                <img class="img_btn_menu" src="./pic/page_l.png">
+            </a>
+            <a id="btn_page_r" onClick="Change_Page(1);" title="Листать вправо">
+                <img class="img_btn_menu" src="./pic/page_r.png">
+            </a>
+            <!-- add gluhoy 2023.02.06 gluhoy_favorites -->
+            <a id="btn_page_r" href="#fav_page" title="Добавить в избранное">
+                <img class="img_btn_menu" src="./pic/fav.png">
+            </a>
+            <select id="select_favority_page" onchange="select_page(this.options[this.selectedIndex].value);"></select>
+            <!-- end gluhoy 2023.02.06 gluhoy_favorites -->
+            <!-- add gluhoy 2023.08.15 eye -->
+            <!--<a id="btn_eye"    onClick="eye_test();" title=""><img class="img_btn_menu" src="./pic/eye_90_w.png"></a>-->
+            <!-- end gluhoy 2023.08.15 eye -->
+            <select id="select_page" onchange="select_page(this.options[this.selectedIndex].value);">
+                <option value="0">1</option>
+                <option value="1">2</option>
+                <option value="2">3</option>
+                <option value="3">4</option>
+                <option value="4">5</option>
+                <option value="5">6</option>
+                <option value="6">7</option>
+                <option value="7">8</option>
+                <option value="8">9</option>
+                <option value="9">10</option>
+                <option value="10">11</option>
+                <option value="11">12</option>
+                <option value="12">13</option>
+                <option value="13">14</option>
+                <option value="14">15</option>
+                <option value="15">16</option>
+                <option value="16">17</option>
+                <option value="17">18</option>
+                <option value="18">19</option>
+                <option value="19">20</option>
+                <option value="20">21</option>
+                <option value="21">22</option>
+                <option value="22">23</option>
+                <option value="23">24</option>
+                <option value="24">25</option>
+                <option value="25">26</option>
+                <option value="26">27</option>
+                <option value="27">28</option>
+                <option value="28">29</option>
+                <option value="29">30</option>
+                <option value="30">31</option>
+                <option value="31">32</option>
+                <option value="32">33</option>
+                <option value="33">34</option>
+                <option value="34">35</option>
+                <option value="35">36</option>
+                <option value="36">37</option>
+                <option value="37">38</option>
+                <option value="38">39</option>
+                <option value="39">40</option>
+                <option value="40">41</option>
+                <option value="41">42</option>
+                <option value="42">43</option>
+                <option value="43">44</option>
+                <option value="44">45</option>
+                <option value="45">46</option>
+                <option value="46">47</option>
+                <option value="47">48</option>
+                <option value="48">49</option>
+                <option value="49">50</option>
+                <option value="50">51</option>
+                <option value="51">52</option>
+                <option value="52">53</option>
+                <option value="53">54</option>
+                <option value="54">55</option>
+                <option value="55">56</option>
+                <option value="56">57</option>
+                <option value="57">58</option>
+                <option value="58">59</option>
+                <option value="59">60</option>
+                <option value="60">61</option>
+                <option value="61">62</option>
+                <option value="62">63</option>
+                <option value="63">64</option>
+                <option value="64">65</option>
+                <option value="65">66</option>
+                <option value="66">67</option>
+                <option value="67">68</option>
+                <option value="68">69</option>
+                <option value="69">70</option>
+                <option value="70">71</option>
+                <option value="71">72</option>
+                <option value="72">73</option>
+                <option value="73">74</option>
+                <option value="74">75</option>
+            </select>
+        </div>
+        <!-- add gluhoy 2023.02.06 gluhoy_favorites -->
+        <div id="fav_page" class="modal_fav" style="display:none;">
+            <p>Избранное</p>
+            <p id="p_del">Удалить закладку</p>
+            <p id="p_add">Добавить закладку</p>
+            <p>
+                <input id="input_fav_page_name" value="" size="25" maxlength="25">
+            </p>
+            <p>
+                <a class="btn" id="a_del" href="#fav_add_del">Удалить</a>
+                <a class="btn" id="a_add" href="#fav_add_del">Добавить</a>
+                <a class="btn" href="#" rel="modal:close">Закрыть</a>
+            </p>
+        </div>
+        <div class="modal" id="fav_add_del" style="display:none;">
+            <p>Ошибка</p>
+        </div>
+        <!-- end gluhoy 2023.02.06 gluhoy_favorites -->
+        <div id="print" class="modal" style="display:none;">
+            <p>Печать</p>
+            <p>
+            <div id="div_print_kol_doc"></div>
+</p><p>
+<div id="div_print_kol_use"></div>
+</p>
+<p>
+    <input id="input_pages_print" value="">
+</p>
+<p>
+    <a class="btn" href="#print_3" id="a_print_3">Предосмотр</a>
+    <!--<a class="btn" href="#print_3" id="a_print_3">Предосмотр</a>-->
+    <!--<a class="btn" href="#print_1" id="a_print_1">Печать</a>-->
+    <a class="btn" href="#" rel="modal:close">Закрыть</a>
+</p>
+</div>
+<div class="modal" id="print_1" style="display:none;">
+    <p>Ошибка</p>
+</div>
+<div class="modal" id="print_3" style="display:none;">
+    <p>Ошибка</p>
+</div>
+<!-- gluhoy 2023.10.19 -->
+<div id="modal_error" class="modal_error" style="display:none;">
+    <div id="div_error">ERROR!!!
+	</div>
+</div>
+<!-- gluhoy 2023.10.19 -->
+<div class="div_main">
+    <table id="table_view">
+        <tr>
+            <td>
+                <img id="page_0" data-src="./libs/view.php?id=13891&page=0&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_1" data-src="./libs/view.php?id=13891&page=1&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_2" data-src="./libs/view.php?id=13891&page=2&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_3" data-src="./libs/view.php?id=13891&page=3&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_4" data-src="./libs/view.php?id=13891&page=4&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_5" data-src="./libs/view.php?id=13891&page=5&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_6" data-src="./libs/view.php?id=13891&page=6&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_7" data-src="./libs/view.php?id=13891&page=7&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_8" data-src="./libs/view.php?id=13891&page=8&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_9" data-src="./libs/view.php?id=13891&page=9&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_10" data-src="./libs/view.php?id=13891&page=10&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_11" data-src="./libs/view.php?id=13891&page=11&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_12" data-src="./libs/view.php?id=13891&page=12&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_13" data-src="./libs/view.php?id=13891&page=13&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_14" data-src="./libs/view.php?id=13891&page=14&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_15" data-src="./libs/view.php?id=13891&page=15&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_16" data-src="./libs/view.php?id=13891&page=16&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_17" data-src="./libs/view.php?id=13891&page=17&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_18" data-src="./libs/view.php?id=13891&page=18&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_19" data-src="./libs/view.php?id=13891&page=19&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_20" data-src="./libs/view.php?id=13891&page=20&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_21" data-src="./libs/view.php?id=13891&page=21&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_22" data-src="./libs/view.php?id=13891&page=22&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_23" data-src="./libs/view.php?id=13891&page=23&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_24" data-src="./libs/view.php?id=13891&page=24&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_25" data-src="./libs/view.php?id=13891&page=25&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_26" data-src="./libs/view.php?id=13891&page=26&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_27" data-src="./libs/view.php?id=13891&page=27&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_28" data-src="./libs/view.php?id=13891&page=28&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_29" data-src="./libs/view.php?id=13891&page=29&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_30" data-src="./libs/view.php?id=13891&page=30&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_31" data-src="./libs/view.php?id=13891&page=31&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_32" data-src="./libs/view.php?id=13891&page=32&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_33" data-src="./libs/view.php?id=13891&page=33&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_34" data-src="./libs/view.php?id=13891&page=34&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_35" data-src="./libs/view.php?id=13891&page=35&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_36" data-src="./libs/view.php?id=13891&page=36&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_37" data-src="./libs/view.php?id=13891&page=37&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_38" data-src="./libs/view.php?id=13891&page=38&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_39" data-src="./libs/view.php?id=13891&page=39&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_40" data-src="./libs/view.php?id=13891&page=40&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_41" data-src="./libs/view.php?id=13891&page=41&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_42" data-src="./libs/view.php?id=13891&page=42&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_43" data-src="./libs/view.php?id=13891&page=43&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_44" data-src="./libs/view.php?id=13891&page=44&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_45" data-src="./libs/view.php?id=13891&page=45&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_46" data-src="./libs/view.php?id=13891&page=46&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_47" data-src="./libs/view.php?id=13891&page=47&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_48" data-src="./libs/view.php?id=13891&page=48&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_49" data-src="./libs/view.php?id=13891&page=49&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_50" data-src="./libs/view.php?id=13891&page=50&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_51" data-src="./libs/view.php?id=13891&page=51&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_52" data-src="./libs/view.php?id=13891&page=52&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_53" data-src="./libs/view.php?id=13891&page=53&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_54" data-src="./libs/view.php?id=13891&page=54&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_55" data-src="./libs/view.php?id=13891&page=55&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_56" data-src="./libs/view.php?id=13891&page=56&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_57" data-src="./libs/view.php?id=13891&page=57&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_58" data-src="./libs/view.php?id=13891&page=58&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_59" data-src="./libs/view.php?id=13891&page=59&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_60" data-src="./libs/view.php?id=13891&page=60&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_61" data-src="./libs/view.php?id=13891&page=61&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_62" data-src="./libs/view.php?id=13891&page=62&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_63" data-src="./libs/view.php?id=13891&page=63&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_64" data-src="./libs/view.php?id=13891&page=64&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_65" data-src="./libs/view.php?id=13891&page=65&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_66" data-src="./libs/view.php?id=13891&page=66&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_67" data-src="./libs/view.php?id=13891&page=67&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_68" data-src="./libs/view.php?id=13891&page=68&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_69" data-src="./libs/view.php?id=13891&page=69&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_70" data-src="./libs/view.php?id=13891&page=70&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_71" data-src="./libs/view.php?id=13891&page=71&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_72" data-src="./libs/view.php?id=13891&page=72&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_73" data-src="./libs/view.php?id=13891&page=73&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <img id="page_74" data-src="./libs/view.php?id=13891&page=74&type=large/fast" class="img_page" height="1200px">
+            </td>
+        </tr>
+    </table>
+</div>
+</body><script>
+    let id_doc = 13891;
+    let pages_count = 75;
+    gl_i = 2;
+    let h = 1200;
+    //add gluhoy 2023.02.06 gluhoy_favorites 
+    $('a[href="#fav_page"]').click(function(event) {
+        Print_Add_Del_Favority_Page();
+        event.preventDefault();
+        $(this).modal({
+            escapeClose: false,
+            clickClose: false,
+            showClose: false
+        });
+    });
+    $('a[href="#fav_add_del"]').click(function(event) {
+        if (Add_Del_Favority_Page() == false) {
+            event.preventDefault();
+            $(this).modal({
+                closeExisting: false
+            });
+        } else {
+            $.modal.close();
+        }
+    });
+    //end gluhoy 2023.02.06 gluhoy_favorites 
+
+    $('a[href="#print"]').click(function(event) {
+        On_Load();
+        event.preventDefault();
+        $(this).modal({
+            escapeClose: false,
+            clickClose: false,
+            showClose: false
+        });
+    });
+    $('a[href="#print_1"]').click(function(event) {
+        let ob = document.getElementById("input_pages_print");
+        if (ob.value != '') {
+            let p = "?pages=" + encodeURIComponent(ob.value) + "&id_doc=" + encodeURIComponent(id_doc);
+            window.open("./libs/print.php" + p);
+            $.modal.close();
+        } else {
+            event.preventDefault();
+            $(this).modal({
+                closeExisting: false
+            });
+        }
+    });
+    $('a[href="#print_3"]').click(function(event) {
+        let ob = document.getElementById("input_pages_print");
+        if (ob.value != '') {
+            let p = "?pages=" + encodeURIComponent(ob.value) + "&id_doc=" + encodeURIComponent(id_doc) + "&prev=1";
+            window.open("./libs/print.php" + p);
+            $.modal.close();
+        } else {
+            event.preventDefault();
+            $(this).modal({
+                closeExisting: false
+            });
+        }
+    });
+</script>
+</html>
