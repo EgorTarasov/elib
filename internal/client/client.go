@@ -21,6 +21,8 @@ const LOGIN_URL = "https://lib.msk.misis.ru/elib/login.php"
 const PAGE_URL = "https://lib.msk.misis.ru/elib/libs/view.php?id=%d&page=%d&type=large/fast"
 const VIEW_URL = "https://lib.msk.misis.ru/elib/view.php?id=%d"
 
+const file = "config.json"
+
 type ElibClient struct {
 	client *http.Client
 }
@@ -40,29 +42,35 @@ func (ec *ElibClient) LoadCredentials() error {
 	file := "config.json"
 	_, err := os.Stat(file)
 	if os.IsNotExist(err) {
-		return nil
+		return ErrCredentialsConfgNotExist
 	}
+
 	f, err := os.Open(file)
 	if err != nil {
-		return fmt.Errorf("can't load credentials")
+		return ErrCannotLoadCredentials
 	}
+
 	defer f.Close()
+
 	var data Credentials
+
 	err = json.NewDecoder(f).Decode(&data)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(fmt.Errorf("decode credentials: %w", err))
 	}
+
 	studentId := data.StudentId
 	name := data.Name
+
 	err = ec.Login(studentId, name)
 	if err != nil {
-		return fmt.Errorf("can't auth with saved credentials")
+		return ErrAuthFailed
 	}
+
 	return nil
 }
 
 func (ec *ElibClient) SaveCredentials(studentId int, name string) {
-	file := "config.json"
 	_, err := os.Stat(file)
 	if os.IsNotExist(err) {
 		_, err := os.Create(file)
@@ -75,6 +83,7 @@ func (ec *ElibClient) SaveCredentials(studentId int, name string) {
 	if err != nil {
 		fmt.Println(err)
 	}
+
 	defer f.Close()
 	err = json.NewEncoder(f).Encode(Credentials{StudentId: studentId, Name: name})
 	if err != nil {

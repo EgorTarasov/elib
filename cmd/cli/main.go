@@ -21,30 +21,37 @@ func main() {
 
 	client := client.NewElibClient()
 	fmt.Println("Welcome to elib parser")
-	err := client.LoadCredentials()
-	if err != nil {
+
+	if err := client.LoadCredentials(); err != nil {
 		for {
 			if studentId != 0 && name != "" {
 				break
 			}
+
 			reader := bufio.NewReader(os.Stdin)
+
 			fmt.Print("Enter student id: ")
+
 			studentIdStr, err := reader.ReadString('\n')
 			if err != nil {
 				fmt.Println(err)
 				return
 			}
+
 			studentId, err = strconv.Atoi(studentIdStr[:len(studentIdStr)-1])
 			if err != nil {
 				fmt.Println(err)
 				return
 			}
+
 			fmt.Print("Enter name: ")
+
 			name, err = reader.ReadString('\n')
 			if err != nil {
 				fmt.Println(err)
 				return
 			}
+
 			err = client.Login(studentId, name)
 			if err != nil {
 				fmt.Println("Can't login, try again")
@@ -52,13 +59,14 @@ func main() {
 				name = ""
 				continue
 			}
+
 			// save credentials to config.json
 			client.SaveCredentials(studentId, name)
-
 		}
 	}
 
 	var command int
+
 	for {
 		fmt.Println("1. Download by id")
 		fmt.Println("2. Exit")
