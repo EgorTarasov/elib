@@ -19,7 +19,10 @@ func main() {
 	var studentId int
 	var name string
 
-	client := client.NewElibClient()
+	client, err := client.NewElibClient()
+	if err != nil {
+		panic(err)
+	}
 	fmt.Println("Welcome to elib parser")
 
 	if err := client.LoadCredentials(); err != nil {

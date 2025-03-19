@@ -1,0 +1,14 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - ${ELIB_PORT}:8080
+    command: ./main ${ELIB_LOGIN} ${ELIB_PASSWORD} -p ${ELIB_PORT}
+    volumes:
+      - books:/root/books
+    restart: always
+
+volumes:
+  books:

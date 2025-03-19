@@ -27,7 +27,7 @@ type ElibClient struct {
 	client *http.Client
 }
 
-func NewElibClient() *ElibClient {
+func NewElibClient(dirname ...string) (*ElibClient, error) {
 	jar, err := cookiejar.New(nil)
 	if err != nil {
 		fmt.Println(err)
@@ -35,7 +35,16 @@ func NewElibClient() *ElibClient {
 	client := &http.Client{
 		Jar: jar,
 	}
-	return &ElibClient{client: client}
+	booksDir := "books"
+	if len(dirname) == 1 {
+		booksDir = dirname[0]
+	}
+	// Create books directory if it doesn't exist
+
+	if err := os.MkdirAll(booksDir, 0755); err != nil {
+		return nil, fmt.Errorf("failed to create books directory: %w", err)
+	}
+	return &ElibClient{client: client}, nil
 }
 
 func (ec *ElibClient) LoadCredentials() error {

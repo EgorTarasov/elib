@@ -52,7 +52,10 @@ func main() {
 	}
 	pass := os.Args[2]
 
-	elib := client.NewElibClient()
+	elib, err := client.NewElibClient()
+	if err != nil {
+		panic(err)
+	}
 
 	if err = elib.Login(login, pass); err != nil {
 		panic(err)
