@@ -127,6 +127,13 @@
             font-size: 0.9rem;
             color: #666;
         }
+
+        .input-hint {
+            font-size: 0.85rem;
+            color: #666;
+            margin-top: 0.5rem;
+        }
+
     </style>
 </head>
 <body>
@@ -137,12 +144,15 @@
 
     <div class="card">
         <div class="instructions">
-            <p>Для работы приложения надо перейти в электронную библиотеку МИСИС и выбрать необходимую книгу или документ, после чего вставить ссылку в поле ниже и нажать кнопку "Скачать".</p>
+            <p>Для работы приложения надо перейти в электронную библиотеку МИСИС и выбрать необходимую книгу или документ, после чего вставить ссылку или ID документа в поле ниже и нажать кнопку "Скачать".</p>
         </div>
 
         <div class="input-group">
-            <input type="text" id="elib-id" placeholder="https://lib.msk.misis.ru/elib/view.php?id=2221">
+            <input type="text" id="elib-id" placeholder="https://lib.msk.misis.ru/elib/view.php?id=2221 или просто 2221">
             <button id="submit-button" onclick="download()">Скачать</button>
+        </div>
+        <div class="input-hint">
+            Можно ввести полную ссылку или только ID документа
         </div>
 
         <div class="progress-indicator" id="progress">
@@ -161,29 +171,39 @@
 </div>
 
 <script>
-    function getDocumentID(url) {
+    function getDocumentID(input) {
+        // Try to extract ID from URL first
         try {
-            let documentID = new URL(url).searchParams.get("id");
-            return documentID;
+            let url = new URL(input);
+            let id = url.searchParams.get("id");
+            if (id) return id;
         } catch (e) {
-            return null;
+            // Not a URL, continue to next check
         }
+
+        // Check if input is numeric (direct ID)
+        if (/^\d+$/.test(input.trim())) {
+            return input.trim();
+        }
+
+        // Neither a valid URL nor a direct ID
+        return null;
     }
 
     function download() {
-        const urlInput = document.getElementById("elib-id").value;
+        const userInput = document.getElementById("elib-id").value;
         const resultArea = document.getElementById("elib-result");
         const progress = document.getElementById("progress");
 
-        if (!urlInput) {
-            resultArea.innerHTML = '<div style="color: red;">Пожалуйста, введите URL документа</div>';
+        if (!userInput) {
+            resultArea.innerHTML = '<div style="color: red;">Пожалуйста, введите URL или ID документа</div>';
             return;
         }
 
-        const documentID = getDocumentID(urlInput);
+        const documentID = getDocumentID(userInput);
 
         if (!documentID) {
-            resultArea.innerHTML = '<div style="color: red;">Некорректный URL. Пожалуйста, введите правильную ссылку на документ</div>';
+            resultArea.innerHTML = '<div style="color: red;">Некорректный ввод. Пожалуйста, введите корректную ссылку или ID документа</div>';
             return;
         }
 
@@ -191,13 +211,54 @@
         progress.style.display = 'block';
         resultArea.innerHTML = '';
 
-        // Here you would add the actual API call to your backend
-        // For now, just simulating with a timeout
-        setTimeout(() => {
-            progress.style.display = 'none';
-            resultArea.innerHTML = `<p>Начата загрузка документа с ID: ${documentID}</p>`;
-            // Add your actual download logic here
-        }, 1500);
+        fetch(`/download?bookId=${documentID}`, {
+            method: 'GET'
+        })
+            .then(response => {
+                progress.style.display = 'none';
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+
+                // Get the filename from the Content-Disposition header if available
+                const contentDisposition = response.headers.get('Content-Disposition');
+                let filename = `book_${documentID}.pdf`;
+                if (contentDisposition) {
+                    const filenameMatch = contentDisposition.match(/filename=(.+)/i);
+                    if (filenameMatch && filenameMatch[1]) {
+                        filename = filenameMatch[1].replace(/"/g, '').trim();
+                    }
+                }
+
+                // Convert the response to a blob
+                return response.blob().then(blob => {
+                    // Create a URL for the blob
+                    const url = window.URL.createObjectURL(blob);
+
+                    // Create a link element
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = filename;
+                    a.style.display = 'none';
+
+                    // Add the link to the document and trigger the download
+                    document.body.appendChild(a);
+                    a.click();
+
+                    // Clean up
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+
+                    // Show success message
+                    resultArea.innerHTML = `<div style="color: green;">Документ успешно загружен!</div>`;
+                });
+            })
+            .catch(error => {
+                progress.style.display = 'none';
+                resultArea.innerHTML = `<div style="color: red;">Ошибка при загрузке: ${error.message}</div>`;
+                console.error('Download error:', error);
+            });
     }
 </script>
 </body>
